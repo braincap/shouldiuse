@@ -1,0 +1,184 @@
+:root {
+  --background-color: #fcbe32;
+  --text-color: #003d50;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: 'Raleway', sans-serif;
+  color: var(--text-color);
+}
+
+li {
+  list-style: none;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+  margin: 0;
+}
+
+pre {
+  margin: 0;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+.App {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  background-color: var(--background-color);
+  padding-top: 25vh;
+  /* overflow-y: scroll; */
+}
+
+.question-text {
+  font-size: 4em;
+  font-weight: bold;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.App form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.App form > * {
+  margin: 5px;
+}
+
+.or {
+  font-size: 2em;
+  padding: 10px;
+  font-weight: bolder;
+}
+
+.phraseBox {
+  font-size: 2em;
+  padding: 10px;
+  font-weight: bolder;
+  background-color: var(--text-color);
+  color: var(--background-color);
+  border: 0px;
+  min-width: 5ch;
+  text-transform: lowercase;
+}
+
+.question-mark {
+  border: none;
+  padding: 0;
+  background: none;
+  display: inline-block;
+  transition: all 100ms ease-in-out;
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.3),
+    0 0 40px rgba(128, 128, 128, 0.1) inset;
+  cursor: pointer;
+}
+
+.question-mark:focus {
+  outline: none;
+}
+
+.question-mark h1 {
+  font-size: 4em;
+  font-weight: bolder;
+  background-color: var(--text-color);
+  padding: 0px 25px;
+  color: var(--background-color);
+}
+
+.question-mark:hover {
+  transform: translateY(4px);
+  transition: all 100ms ease-in-out;
+  box-shadow: none;
+}
+
+.question-mark:active {
+  transform: translateY(6px);
+}
+
+.results {
+  display: flex;
+  justify-content: center;
+  margin-left: -40px;
+}
+
+.result-title {
+  text-align: center;
+}
+
+.results > .result-number {
+  text-align: right;
+}
+
+.winner {
+  background-color: rgb(0, 231, 173);
+}
+
+.footer {
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--background-color);
+  filter: brightness(1.1);
+  border: none;
+  padding: 10px;
+}
+
+.s-alert-wrapper text {
+  color: white !important;
+}
+
+/* Smartphones (portrait)  */
+
+@media only screen and (max-width: 520px) {
+  .App form {
+    flex-direction: column;
+  }
+  .question-text {
+    font-size: 3em;
+    white-space: unset;
+  }
+  .phraseBox {
+    width: 100%;
+  }
+  .results > ul {
+    margin-left: 0px;
+  }
+
+  .App {
+    padding-top: 20px;
+  }
+}
+
+@media only screen and (min-width: 1500px) {
+  .question-text {
+    margin-left: 120px;
+  }
+}
