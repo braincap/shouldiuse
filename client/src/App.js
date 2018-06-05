@@ -4,24 +4,34 @@ import axios from 'axios';
 import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/jelly.css';
 import Alert from 'react-s-alert';
+import Logo from './logo.svg';
+import Button from './button.svg';
 
 class App extends Component {
   state = {
     phraseOne: '',
     phraseTwo: '',
-    phraseOneResults: {},
-    phraseTwoResults: {},
+    phraseOneResults: {
+      Wikipedia: 12345,
+      'New York Times': 1234,
+      Guardian: 432
+    },
+    phraseTwoResults: {
+      Wikipedia: 12345,
+      'New York Times': 1234,
+      Guardian: 432
+    },
     winner: '',
     phraseOnePlaceHolder: [
       'peak interest',
       'deep seeded',
-      'should have',
+      'adverse effects',
       'defuse the situation'
     ],
     phraseTwoPlaceHolder: [
       'pique interest',
       'deep seated',
-      'should have',
+      'adverse affects',
       'diffuse the situation'
     ]
   };
@@ -84,71 +94,82 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1 className="question-text">Should I use</h1>
-        <form onSubmit={this.handleOnSubmit}>
-          <input
-            autoFocus
-            type="text"
-            id="phraseOne"
-            placeholder={this.state.phraseOnePlaceHolder[0]}
-            className="phraseBox"
-            value={this.state.phraseOne}
-            onChange={e =>
-              this.setState({ phraseOne: e.target.value.toLocaleLowerCase() })
+        <div className="circle">
+          <img className="logo" src={Logo} />
+          <form onSubmit={this.handleOnSubmit}>
+            <div className="inputs">
+              <input
+                autoFocus
+                type="text"
+                id="phraseOne"
+                placeholder={this.state.phraseOnePlaceHolder[0]}
+                className="phraseBox"
+                value={this.state.phraseOne}
+                onChange={e =>
+                  this.setState({
+                    phraseOne: e.target.value.toLocaleLowerCase()
+                  })
+                }
+              />
+              <h1 className="or">or</h1>
+              <input
+                type="text"
+                id="phraseTwo"
+                placeholder={this.state.phraseTwoPlaceHolder[0]}
+                className="phraseBox"
+                value={this.state.phraseTwo}
+                onChange={e =>
+                  this.setState({
+                    phraseTwo: e.target.value.toLocaleLowerCase()
+                  })
+                }
+              />
+            </div>
+            {
+              <button
+                type="submit"
+                onClick={this.handleOnSubmit}
+                className="button"
+              >
+                <img src={Button} alt="Button" />
+              </button>
             }
-          />
-          <h1 className="or">or</h1>
-          <input
-            type="text"
-            id="phraseTwo"
-            placeholder={this.state.phraseTwoPlaceHolder[0]}
-            className="phraseBox"
-            value={this.state.phraseTwo}
-            onChange={e =>
-              this.setState({ phraseTwo: e.target.value.toLocaleLowerCase() })
-            }
-          />
-          <button
-            type="submit"
-            onClick={this.handleOnSubmit}
-            className="question-mark"
-          >
-            <h1>?</h1>
-          </button>
-        </form>
-        <div className="results">
-          <ul
-            className={`result-number ${
-              this.state.winner === 'phraseOne' ? 'winner' : 'loser'
-            }`}
-          >
-            {Object.values(this.state.phraseOneResults).map((value, index) => (
-              <li key={Object.keys(this.state.phraseOneResults)[index]}>
-                <h4>{value.toLocaleString()}</h4>
-              </li>
-            ))}
-          </ul>
-          <ul className="result-title">
-            {Object.keys(this.state.phraseOneResults).map(value => (
-              <li key={value}>
-                <h4>{value}</h4>
-              </li>
-            ))}
-          </ul>
-          <ul
-            className={`result-number ${
-              this.state.winner === 'phraseTwo' ? 'winner' : 'loser'
-            }`}
-          >
-            {Object.values(this.state.phraseTwoResults).map((value, index) => (
-              <li key={Object.keys(this.state.phraseTwoResults)[index]}>
-                <h4>{value.toLocaleString()}</h4>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="footer">
-          <h3>Developed by Jai</h3>
+          </form>
+          <div className="results">
+            <ul
+              className={`result-number ${
+                this.state.winner === 'phraseOne' ? 'winner' : 'loser'
+              }`}
+            >
+              {Object.values(this.state.phraseOneResults).map(
+                (value, index) => (
+                  <li key={Object.keys(this.state.phraseOneResults)[index]}>
+                    <h4>{value.toLocaleString()}</h4>
+                  </li>
+                )
+              )}
+            </ul>
+            <ul className="result-title">
+              {Object.keys(this.state.phraseOneResults).map(value => (
+                <li key={value}>
+                  <h4>{value}</h4>
+                </li>
+              ))}
+            </ul>
+            <ul
+              className={`result-number ${
+                this.state.winner === 'phraseTwo' ? 'winner' : 'loser'
+              }`}
+            >
+              {Object.values(this.state.phraseTwoResults).map(
+                (value, index) => (
+                  <li key={Object.keys(this.state.phraseTwoResults)[index]}>
+                    <h4>{value.toLocaleString()}</h4>
+                  </li>
+                )
+              )}
+            </ul>
+          </div>
         </div>
         <Alert stack={{ limit: 3 }} />
       </div>
