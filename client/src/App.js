@@ -11,6 +11,7 @@ import NYTLogo from './assets/nyt.png';
 
 class App extends Component {
   state = {
+    info: localStorage.getItem('info') || 'show',
     logos: [WikipediaLogo, NYTLogo, GuardianLogo],
     phraseOne: '',
     phraseTwo: '',
@@ -40,7 +41,7 @@ class App extends Component {
   };
 
   componentDidMount = () => {
-    window.axios = axios;
+    localStorage.setItem('info', this.state.info);
     this.placeHolderShifter();
   };
 
@@ -60,6 +61,8 @@ class App extends Component {
 
   handleOnSubmit = async e => {
     e.preventDefault();
+    localStorage.setItem('info', 'hide');
+    this.setState({ info: 'hide' });
     if (this.state.phraseOne.length < 3 || this.state.phraseTwo.length < 3) {
       Alert.error('Please enter longer phrases in both boxes for comparison', {
         position: 'bottom',
@@ -110,7 +113,11 @@ class App extends Component {
                 id="phraseOne"
                 placeholder={this.state.phraseOnePlaceHolder[0]}
                 className={`phraseBox ${
-                  this.state.winner === 'phraseOne' ? 'winner' : 'loser'
+                  this.state.winner === 'phraseOne'
+                    ? 'winner'
+                    : this.state.winner === 'phraseTwo'
+                      ? 'loser'
+                      : ''
                 }`}
                 value={this.state.phraseOne}
                 onChange={e =>
@@ -136,7 +143,11 @@ class App extends Component {
                 id="phraseTwo"
                 placeholder={this.state.phraseTwoPlaceHolder[0]}
                 className={`phraseBox ${
-                  this.state.winner === 'phraseTwo' ? 'winner' : 'loser'
+                  this.state.winner === 'phraseTwo'
+                    ? 'winner'
+                    : this.state.winner === 'phraseOne'
+                      ? 'loser'
+                      : ''
                 }`}
                 value={this.state.phraseTwo}
                 onChange={e =>
@@ -167,6 +178,30 @@ class App extends Component {
               </button>
             }
           </form>
+          <div
+            className={`info-box ${
+              Object.values(this.state.phraseOneResults)[0] === null &&
+              this.state.info === 'show'
+                ? 'show'
+                : 'hide'
+            }`}
+          >
+            <button
+              className="close"
+              onClick={() => {
+                localStorage.setItem('info', 'hide');
+                this.setState({ info: 'hide' });
+              }}
+            >
+              x
+            </button>
+            <p>
+              Ever been confused if you should use "deep seeded" or "deep
+              seated"? Find out how most authors use them in major publications.
+              We'll help you search through <strong>Wikipedia</strong>,{' '}
+              <strong>New York Times</strong> and <strong>The Guardian</strong>!
+            </p>
+          </div>
           <ul
             className={`results ${
               Object.values(this.state.phraseOneResults)[0] === null
@@ -215,39 +250,3 @@ class App extends Component {
 }
 
 export default App;
-
-/*
-<ul
-              className={`result-number ${
-                this.state.winner === 'phraseOne' ? 'winner' : 'loser'
-              }`}
-            >
-              {Object.values(this.state.phraseOneResults).map(
-                (value, index) => (
-                  <li key={Object.keys(this.state.phraseOneResults)[index]}>
-                    <h4>{value.toLocaleString()}</h4>
-                  </li>
-                )
-              )}
-            </ul>
-            <ul className="result-title">
-              {Object.keys(this.state.phraseOneResults).map(value => (
-                <li key={value}>
-                  <h4>{value}</h4>
-                </li>
-              ))}
-            </ul>
-            <ul
-              className={`result-number ${
-                this.state.winner === 'phraseTwo' ? 'winner' : 'loser'
-              }`}
-            >
-              {Object.values(this.state.phraseTwoResults).map(
-                (value, index) => (
-                  <li key={Object.keys(this.state.phraseTwoResults)[index]}>
-                    <h4>{value.toLocaleString()}</h4>
-                  </li>
-                )
-              )}
-            </ul>
-*/
