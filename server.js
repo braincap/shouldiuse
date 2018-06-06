@@ -13,12 +13,10 @@ app.get('/api/search_phrases', async (req, res) => {
   const finalResults = {};
   for (let i = 0; i < Object.keys(phrases).length; i++) {
     finalResults[Object.keys(phrases)[i]] = {};
-    finalResults[Object.keys(phrases)[i]]['Wikipedia'] = wikiHits[i];
-    finalResults[Object.keys(phrases)[i]]['New York Times'] = nytHits[i];
-    finalResults[Object.keys(phrases)[i]]['Guardian'] = guardianHits[i];
+    finalResults[Object.keys(phrases)[i]]['wikipedia'] = wikiHits[i];
+    finalResults[Object.keys(phrases)[i]]['nyt'] = nytHits[i];
+    finalResults[Object.keys(phrases)[i]]['guardian'] = guardianHits[i];
   }
-  console.log(finalResults);
-  res.send(finalResults);
 });
 
 app.listen(process.env.PORT || 5000, () =>

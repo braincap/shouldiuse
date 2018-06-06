@@ -5,23 +5,26 @@ import 'react-s-alert/dist/s-alert-default.css';
 import 'react-s-alert/dist/s-alert-css-effects/jelly.css';
 import Alert from 'react-s-alert';
 import Logo from './logo.svg';
-import Button from './button.svg';
+import WikipediaLogo from './assets/wiki.png';
+import GuardianLogo from './assets/guardian.png';
+import NYTLogo from './assets/nyt.png';
 
 class App extends Component {
   state = {
+    logos: [WikipediaLogo, NYTLogo, GuardianLogo],
     phraseOne: '',
     phraseTwo: '',
     phraseOneResults: {
-      Wikipedia: 12345,
-      'New York Times': 1234,
-      Guardian: 432
+      wikipedia: null,
+      nyt: null,
+      guardian: null
     },
     phraseTwoResults: {
-      Wikipedia: 12345,
-      'New York Times': 1234,
-      Guardian: 432
+      wikipedia: null,
+      nyt: null,
+      guardian: null
     },
-    winner: '',
+    winner: null,
     phraseOnePlaceHolder: [
       'peak interest',
       'deep seeded',
@@ -56,7 +59,7 @@ class App extends Component {
 
   handleOnSubmit = async e => {
     e.preventDefault();
-    if (this.state.phraseOne.length < 3 && this.state.phraseTwo.length < 3) {
+    if (this.state.phraseOne.length < 3 || this.state.phraseTwo.length < 3) {
       Alert.error('Please enter longer phrases in both boxes for comparison', {
         position: 'bottom',
         effect: 'jelly',
@@ -95,7 +98,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="circle">
-          <img className="logo" src={Logo} />
+          <img className="logo" src={Logo} alt="shouldiuse" />
           <form onSubmit={this.handleOnSubmit}>
             <div className="inputs">
               <input
@@ -103,11 +106,24 @@ class App extends Component {
                 type="text"
                 id="phraseOne"
                 placeholder={this.state.phraseOnePlaceHolder[0]}
-                className="phraseBox"
+                className={`phraseBox ${
+                  this.state.winner === 'phraseOne' ? 'winner' : 'loser'
+                }`}
                 value={this.state.phraseOne}
                 onChange={e =>
                   this.setState({
-                    phraseOne: e.target.value.toLocaleLowerCase()
+                    phraseOne: e.target.value.toLocaleLowerCase(),
+                    winner: false,
+                    phraseOneResults: {
+                      wikipedia: null,
+                      nyt: null,
+                      guardian: null
+                    },
+                    phraseTwoResults: {
+                      wikipedia: null,
+                      nyt: null,
+                      guardian: null
+                    }
                   })
                 }
               />
@@ -116,11 +132,24 @@ class App extends Component {
                 type="text"
                 id="phraseTwo"
                 placeholder={this.state.phraseTwoPlaceHolder[0]}
-                className="phraseBox"
+                className={`phraseBox ${
+                  this.state.winner === 'phraseTwo' ? 'winner' : 'loser'
+                }`}
                 value={this.state.phraseTwo}
                 onChange={e =>
                   this.setState({
-                    phraseTwo: e.target.value.toLocaleLowerCase()
+                    phraseTwo: e.target.value.toLocaleLowerCase(),
+                    winner: false,
+                    phraseOneResults: {
+                      wikipedia: null,
+                      nyt: null,
+                      guardian: null
+                    },
+                    phraseTwoResults: {
+                      wikipedia: null,
+                      nyt: null,
+                      guardian: null
+                    }
                   })
                 }
               />
@@ -129,14 +158,64 @@ class App extends Component {
               <button
                 type="submit"
                 onClick={this.handleOnSubmit}
-                className="button"
+                className="submit-button"
               >
-                <img src={Button} alt="Button" />
+                {/* <img src={Button} alt="Button" /> */}
+                <h1>></h1>
               </button>
             }
           </form>
-          <div className="results">
-            <ul
+          <ul
+            className={`results ${
+              Object.values(this.state.phraseOneResults)[0] === null
+                ? 'no-results'
+                : ''
+            }`}
+          >
+            {Object.keys(this.state.phraseOneResults).map((value, index) => (
+              <li key={index} className={`result-item ${value}`}>
+                <ul>
+                  <li
+                    className={`numbers phrase-one ${
+                      this.state.winner === 'phraseOne' ? 'winner' : 'loser'
+                    }`}
+                  >
+                    <h2>
+                      {!this.state.winner
+                        ? 0
+                        : this.state.phraseOneResults[value].toLocaleString()}
+                    </h2>
+                  </li>
+                  <li className="source-logo">
+                    <img src={this.state.logos[index]} alt={value} />
+                  </li>
+                  <li
+                    className={`numbers phrase-two ${
+                      this.state.winner === 'phraseTwo' ? 'winner' : 'loser'
+                    }`}
+                  >
+                    <h2>
+                      {!this.state.winner
+                        ? 0
+                        : this.state.phraseTwoResults[value].toLocaleString()}
+                    </h2>
+                  </li>
+                </ul>
+                <hr />
+              </li>
+            ))}
+          </ul>
+        </div>
+        <Alert stack={{ limit: 3 }} />
+      </div>
+    );
+  }
+}
+
+export default App;
+
+/*
+<ul
               className={`result-number ${
                 this.state.winner === 'phraseOne' ? 'winner' : 'loser'
               }`}
@@ -169,12 +248,4 @@ class App extends Component {
                 )
               )}
             </ul>
-          </div>
-        </div>
-        <Alert stack={{ limit: 3 }} />
-      </div>
-    );
-  }
-}
-
-export default App;
+*/
