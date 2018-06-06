@@ -5,6 +5,7 @@ const _ = require('lodash');
 module.exports = async phrases => {
   let resPromises = [];
   Object.values(phrases).forEach((phrase, index) => {
+    console.log(keys.nytAPIKeys[index]);
     resPromises.push(
       axios.get(`https://api.nytimes.com/svc/search/v2/articlesearch.json`, {
         params: {
