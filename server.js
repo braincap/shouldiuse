@@ -1,6 +1,7 @@
 const express = require('express');
 const axios = require('axios');
 const keys = require('./config/keys');
+console.log(keys.nytAPIKeys, typeof keys.nytAPIKeys);
 const app = express();
 
 // https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&utf8=1&srsearch=india&srwhat=text&srinfo=totalhits
