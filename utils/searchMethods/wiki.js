@@ -23,6 +23,5 @@ module.exports = async phrases => {
   const wikiHits = resolvedRes.map(res =>
     _.get(res, 'data.query.searchinfo.totalhits', 0)
   );
-
   return wikiHits;
 };

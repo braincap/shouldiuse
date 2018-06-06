@@ -202,15 +202,15 @@ hr {
 }
 
 .wikipedia hr {
-  border-top: 1px solid var(--blue);
+  border-top: 2px solid var(--blue);
 }
 
 .nyt hr {
-  border-top: 1px solid var(--red);
+  border-top: 2px solid var(--red);
 }
 
 .guardian hr {
-  border-top: 1px solid var(--green);
+  border-top: 2px solid var(--green);
 }
 
 .result-item:not(:last-child) {

@@ -1,10 +1,9 @@
 const express = require('express');
 const axios = require('axios');
+const morgan = require('morgan');
 const keys = require('./config/keys');
-console.log(keys.nytAPIKeys, typeof keys.nytAPIKeys);
 const app = express();
-
-// https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&utf8=1&srsearch=india&srwhat=text&srinfo=totalhits
+app.use(morgan('dev'));
 
 app.get('/api/search_phrases', async (req, res) => {
   const phrases = req.query;
@@ -18,6 +17,7 @@ app.get('/api/search_phrases', async (req, res) => {
     finalResults[Object.keys(phrases)[i]]['nyt'] = nytHits[i];
     finalResults[Object.keys(phrases)[i]]['guardian'] = guardianHits[i];
   }
+  res.send(finalResults);
 });
 
 if (process.env.NODE_ENV === 'production') {

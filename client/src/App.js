@@ -40,6 +40,7 @@ class App extends Component {
   };
 
   componentDidMount = () => {
+    window.axios = axios;
     this.placeHolderShifter();
   };
 
@@ -67,7 +68,6 @@ class App extends Component {
       });
       return;
     }
-
     let res;
     try {
       res = await axios.get(
@@ -76,18 +76,21 @@ class App extends Component {
         }`
       );
       const { phraseOne, phraseTwo } = res.data;
+      const phraseOneTotals = Object.values(phraseOne).reduce(
+        (sum, currentValue) => sum + currentValue
+      );
+      const phraseTwoTotals = Object.values(phraseTwo).reduce(
+        (sum, currentValue) => sum + currentValue
+      );
       this.setState({
         phraseOneResults: phraseOne,
         phraseTwoResults: phraseTwo,
         winner:
-          Object.values(phraseOne).reduce(
-            (sum, currentValue) => sum + currentValue
-          ) >
-          Object.values(phraseTwo).reduce(
-            (sum, currentValue) => sum + currentValue
-          )
+          phraseOneTotals > phraseTwoTotals
             ? 'phraseOne'
-            : 'phraseTwo'
+            : phraseOneTotals < phraseTwoTotals
+              ? 'phraseTwo'
+              : 'equal'
       });
     } catch (error) {
       console.log(error);
@@ -160,7 +163,6 @@ class App extends Component {
                 onClick={this.handleOnSubmit}
                 className="submit-button"
               >
-                {/* <img src={Button} alt="Button" /> */}
                 <h1>></h1>
               </button>
             }

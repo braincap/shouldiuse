@@ -26,5 +26,6 @@ module.exports = async phrases => {
   const nytHits = resolvedRes.map(res =>
     _.get(res, 'data.response.meta.hits', 0)
   );
+
   return nytHits;
 };
