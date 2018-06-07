@@ -8,7 +8,7 @@ import Logo from './logo.svg';
 import WikipediaLogo from './assets/wiki.png';
 import GuardianLogo from './assets/guardian.png';
 import NYTLogo from './assets/nyt.png';
-
+import ReactGA from 'react-ga';
 class App extends Component {
   state = {
     info: localStorage.getItem('info') || 'show',
@@ -41,6 +41,8 @@ class App extends Component {
   };
 
   componentDidMount = () => {
+    ReactGA.initialize('UA-120514726-1');
+    ReactGA.pageview(window.location.pathname);
     localStorage.setItem('info', this.state.info);
     this.placeHolderShifter();
   };
@@ -71,6 +73,15 @@ class App extends Component {
       });
       return;
     }
+    ReactGA.event({
+      category: 'Form',
+      action: 'Submitted the form',
+      gaOptions: {
+        phraseOne: this.state.phraseOne,
+        phraseTwo: this.state.phraseTwo
+      }
+    });
+
     let res;
     try {
       res = await axios.get(
