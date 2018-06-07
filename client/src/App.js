@@ -208,8 +208,8 @@ class App extends Component {
             </button>
             <p>
               Ever been confused if you should use "deep seeded" or "deep
-              seated"? Find out how most authors use them in major publications.
-              We'll help you search through <strong>Wikipedia</strong>,{' '}
+              seated"? Find out most used phrase among major publications. We'll
+              help you search most used phrase in <strong>Wikipedia</strong>,{' '}
               <strong>New York Times</strong> and <strong>The Guardian</strong>!
             </p>
           </div>
