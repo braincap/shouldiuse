@@ -3,8 +3,9 @@ const axios = require('axios');
 const morgan = require('morgan');
 const keys = require('./config/keys');
 const app = express();
+const compression = require('compression');
 app.use(morgan('dev'));
-
+app.use(compression());
 app.get('/api/search_phrases', async (req, res) => {
   const phrases = req.query;
   const wikiHits = await require('./utils/searchMethods/wiki')(phrases);
