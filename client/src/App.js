@@ -9,6 +9,8 @@ import WikipediaLogo from './assets/wiki.png';
 import GuardianLogo from './assets/guardian.png';
 import NYTLogo from './assets/nyt.png';
 import ReactGA from 'react-ga';
+import 'babel-polyfill';
+
 class App extends Component {
   state = {
     info: localStorage.getItem('info') || 'show',
