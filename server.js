@@ -5,6 +5,9 @@ const keys = require('./config/keys');
 const app = express();
 const compression = require('compression');
 app.use(morgan('dev'));
+app.use(
+  require('prerender-node').set('prerenderToken', 'mZEmkiKD0nHf9bmnRDek')
+);
 app.use(compression());
 app.get('/api/search_phrases', async (req, res) => {
   const phrases = req.query;
