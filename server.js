@@ -10,7 +10,11 @@ app.use(
 );
 app.use(compression());
 app.get('/api/search_phrases', async (req, res) => {
-  const phrases = req.query;
+  const rawPhrases = req.query;
+  let phrases = {};
+  for (let key in rawPhrases) {
+    phrases[key] = rawPhrases[key].replace(/['"]+/g, '').trim();
+  }
   const wikiHits = await require('./utils/searchMethods/wiki')(phrases);
   const nytHits = await require('./utils/searchMethods/nyt')(phrases);
   const guardianHits = await require('./utils/searchMethods/guardian')(phrases);

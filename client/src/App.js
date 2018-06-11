@@ -87,9 +87,7 @@ class App extends Component {
     let res;
     try {
       res = await axios.get(
-        `/api/search_phrases/?phraseOne=${this.state.phraseOne}&phraseTwo=${
-          this.state.phraseTwo
-        }`
+        `/api/search_phrases/?phraseOne=${this.state.phraseOne.trim()}&phraseTwo=${this.state.phraseTwo.trim()}`
       );
       const { phraseOne, phraseTwo } = res.data;
       const phraseOneTotals = Object.values(phraseOne).reduce(
@@ -135,7 +133,9 @@ class App extends Component {
                 value={this.state.phraseOne}
                 onChange={e =>
                   this.setState({
-                    phraseOne: e.target.value.toLocaleLowerCase(),
+                    phraseOne: e.target.value
+                      .toLocaleLowerCase()
+                      .replace(/['"]+/g, ''),
                     winner: false,
                     phraseOneResults: {
                       wikipedia: null,
@@ -165,7 +165,9 @@ class App extends Component {
                 value={this.state.phraseTwo}
                 onChange={e =>
                   this.setState({
-                    phraseTwo: e.target.value.toLocaleLowerCase(),
+                    phraseTwo: e.target.value
+                      .toLocaleLowerCase()
+                      .replace(/['"]+/g, ''),
                     winner: false,
                     phraseOneResults: {
                       wikipedia: null,
