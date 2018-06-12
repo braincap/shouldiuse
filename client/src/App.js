@@ -135,7 +135,7 @@ class App extends Component {
                   this.setState({
                     phraseOne: e.target.value
                       .toLocaleLowerCase()
-                      .replace(/['"]+/g, ''),
+                      .replace(/["]+/g, ''),
                     winner: false,
                     phraseOneResults: {
                       wikipedia: null,
@@ -167,7 +167,7 @@ class App extends Component {
                   this.setState({
                     phraseTwo: e.target.value
                       .toLocaleLowerCase()
-                      .replace(/['"]+/g, ''),
+                      .replace(/["]+/g, ''),
                     winner: false,
                     phraseOneResults: {
                       wikipedia: null,
